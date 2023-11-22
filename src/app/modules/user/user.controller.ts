@@ -101,11 +101,11 @@ const getSingleOrder = catchAsync(async (req: Request, res: Response) => {
 const getTotalPrice = catchAsync(async (req: Request, res: Response) => {
   const id: string = req?.params?.id
 
-  const result = await UserServices.getSingleOrder(id)
+  const result = await UserServices.getTotalPrice(id)
   const responseData = {
     status: httpStatus.OK,
     success: true,
-    message: 'Order fetched successfully!',
+    message: 'Total price calculated successfully!',
     data: result
   }
   sendResponse<IUser>(res, responseData)

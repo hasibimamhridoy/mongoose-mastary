@@ -2,14 +2,15 @@ import httpStatus from 'http-status'
 import ApiError from '../../../error/ApiError'
 import { IOrder, IUser } from './user.interface'
 import User from './user.model'
+import mongoose from 'mongoose'
+const ObjectId = mongoose.Types.ObjectId
 
 const getSingleUser = async (id: string): Promise<IUser | null> => {
-  
   const isExist = await User.myCustomUserFind(id)
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User Not Found')
   }
-  
+
   const result = await User.findById(id, { password: 0, orders: 0 })
   return result
 }
@@ -28,7 +29,6 @@ const createUser = async (payload: IUser): Promise<Partial<IUser>> => {
 }
 
 const updateUser = async (id: string, data: IUser): Promise<IUser | null> => {
-  
   const isExist = await User.myCustomUserFind(id)
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User Not Found')
@@ -63,13 +63,45 @@ const createOrder = async (id: string, data: IOrder): Promise<IUser | null> => {
 }
 
 const getSingleOrder = async (id: string): Promise<IUser | null> => {
-  
   const isExist = await User.myCustomUserFind(id)
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User Not Found')
   }
-  
-  const result = await User.findById(id, { orders: 1 , _id:0 })
+
+  const result = await User.findById(id, { orders: 1, _id: 0 })
+  return result
+}
+
+const getTotalPrice = async (id: string): Promise<IUser | null> => {
+  const isExist = await User.myCustomUserFind(id)
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User Not Found')
+  }
+
+  const pipeline = [
+    {
+      $match: {
+        _id: new ObjectId(id)
+      }
+    },
+    {
+      $unwind: '$orders'
+    },
+    {
+      $group: {
+        _id: null,
+        totalPrice: {
+          $sum: '$orders.price'
+        }
+      }
+    },
+    {
+      $project: {_id:0}
+    },
+  ]
+  const result = await User.aggregate(pipeline)
+
+  console.log(result)
   return result
 }
 
@@ -80,5 +112,6 @@ export const UserServices = {
   getSingleUser,
   deleteUser,
   createOrder,
-  getSingleOrder
+  getSingleOrder,
+  getTotalPrice
 }
