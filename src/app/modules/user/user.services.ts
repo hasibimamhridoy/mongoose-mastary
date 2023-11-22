@@ -62,11 +62,23 @@ const createOrder = async (id: string, data: IOrder): Promise<IUser | null> => {
   return result
 }
 
+const getSingleOrder = async (id: string): Promise<IUser | null> => {
+  
+  const isExist = await User.myCustomUserFind(id)
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User Not Found')
+  }
+  
+  const result = await User.findById(id, { orders: 1 , _id:0 })
+  return result
+}
+
 export const UserServices = {
   createUser,
   updateUser,
   getUsers,
   getSingleUser,
   deleteUser,
-  createOrder
+  createOrder,
+  getSingleOrder
 }

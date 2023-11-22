@@ -90,11 +90,11 @@ const createOrder = catchAsync(async (req: Request, res: Response) => {
 const getSingleOrder = catchAsync(async (req: Request, res: Response) => {
   const id: string = req?.params?.id
 
-  const result = await UserServices.getSingleUser(id)
+  const result = await UserServices.getSingleOrder(id)
   const responseData = {
     status: httpStatus.OK,
     success: true,
-    message: 'Successfully get single User',
+    message: 'Order fetched successfully!',
     data: result
   }
   sendResponse<IUser>(res, responseData)
