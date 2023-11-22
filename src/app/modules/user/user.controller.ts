@@ -70,12 +70,10 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
   }
 })
 
-
 const createOrder = catchAsync(async (req: Request, res: Response) => {
-  
   const id = req.params.id
   const payload: IOrder = req.body
-  const result = await UserServices.createOrder(id,payload)
+  const result = await UserServices.createOrder(id, payload)
   const responseData = {
     status: httpStatus.OK,
     success: true,
@@ -100,6 +98,19 @@ const getSingleOrder = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IUser>(res, responseData)
 })
 
+const getTotalPrice = catchAsync(async (req: Request, res: Response) => {
+  const id: string = req?.params?.id
+
+  const result = await UserServices.getSingleOrder(id)
+  const responseData = {
+    status: httpStatus.OK,
+    success: true,
+    message: 'Order fetched successfully!',
+    data: result
+  }
+  sendResponse<IUser>(res, responseData)
+})
+
 export const UserController = {
   createUser,
   updateUser,
@@ -107,5 +118,6 @@ export const UserController = {
   getSingleUser,
   deleteUser,
   createOrder,
-  getSingleOrder
+  getSingleOrder,
+  getTotalPrice
 }

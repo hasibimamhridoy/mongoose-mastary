@@ -8,6 +8,7 @@ const userRouter = express.Router()
 userRouter.get('/:id', UserController.getSingleUser)
 userRouter.get('/', UserController.getUsers)
 userRouter.get('/:id/orders', UserController.getSingleOrder)
+userRouter.get('/:id/orders/total-price', UserController.getTotalPrice)
 
 userRouter.post(
   '/',
