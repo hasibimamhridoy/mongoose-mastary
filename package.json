@@ -11,7 +11,8 @@
     "prettier-fix": "prettie --write .",
     "lint-prettier": "yarn lint:check && yarn prettier:check",
     "husky:setup": "yarn husky install && yarn husky add .husky/pre-commit \"yarn lint-staged\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "author": "Hasib Imam",
   "license": "ISC",
