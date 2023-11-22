@@ -3,7 +3,7 @@ import catchAsync from '../../../shared/catchAsync'
 
 import sendResponse from '../../../shared/sendResponse'
 import httpStatus from 'http-status'
-import { IUser } from './user.interface'
+import { IOrder, IUser } from './user.interface'
 import { UserServices } from './user.services'
 
 const getSingleUser = catchAsync(async (req: Request, res: Response) => {
@@ -42,12 +42,14 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
 })
 
 const createOrder = catchAsync(async (req: Request, res: Response) => {
-  const payload: IUser = req.body
-  const result = await UserServices.createUser(payload)
+  
+  const id = req.params.id
+  const payload: IOrder = req.body
+  const result = await UserServices.createOrder(id,payload)
   const responseData = {
     status: httpStatus.OK,
     success: true,
-    message: 'User created successfully',
+    message: 'Order created successfully',
     data: result
   }
   sendResponse(res, responseData)
