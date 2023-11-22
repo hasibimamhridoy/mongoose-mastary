@@ -28,5 +28,5 @@ export type IUser = {
 
 export type IUserModel = {
   hashGenerator(password: string): Promise<string>
-  checkPassword(givenPassword: string, savedPassword: string): Promise<boolean>
+  myCustomUserFind(id:string) : Promise<IUser | null>
 } & Model<IUser>

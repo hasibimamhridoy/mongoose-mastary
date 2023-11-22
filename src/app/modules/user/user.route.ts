@@ -7,6 +7,7 @@ const userRouter = express.Router()
 
 userRouter.get('/:id', UserController.getSingleUser)
 userRouter.get('/', UserController.getUsers)
+userRouter.get('/:id/orders', UserController.getSingleOrder)
 
 userRouter.post(
   '/',
@@ -14,12 +15,12 @@ userRouter.post(
   UserController.createUser
 )
 
-userRouter.patch(
+userRouter.put(
   '/:id',
   validateRequestMiddleWare(UserValidation.updateUserZodSchema),
   UserController.updateUser
 )
-userRouter.patch(
+userRouter.put(
   '/:id/orders',
   validateRequestMiddleWare(UserValidation.updateUserZodSchema),
   UserController.createOrder

@@ -38,9 +38,10 @@ UserSchema.statics.hashGenerator = async password => {
   return await bcrypt.hash(password, Number(12))
 }
 
-UserSchema.statics.checkPassword = async (givenPassword, savedPassword) => {
-  return await bcrypt.compare(givenPassword, savedPassword)
-}
+
+UserSchema.static('myCustomUserFind',async function myCustomUserFind(id:string) {
+  return await User.findById({_id:id});
+});
 
 UserSchema.pre('save', async function (next) {
   this.password = await User.hashGenerator(this.password)

@@ -41,20 +41,6 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, responseData)
 })
 
-const createOrder = catchAsync(async (req: Request, res: Response) => {
-  
-  const id = req.params.id
-  const payload: IOrder = req.body
-  const result = await UserServices.createOrder(id,payload)
-  const responseData = {
-    status: httpStatus.OK,
-    success: true,
-    message: 'Order created successfully',
-    data: result
-  }
-  sendResponse(res, responseData)
-})
-
 const updateUser = catchAsync(async (req: Request, res: Response) => {
   const id: string = req?.params?.id
   const data: IUser = req?.body
@@ -84,11 +70,42 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
   }
 })
 
+
+const createOrder = catchAsync(async (req: Request, res: Response) => {
+  
+  const id = req.params.id
+  const payload: IOrder = req.body
+  const result = await UserServices.createOrder(id,payload)
+  const responseData = {
+    status: httpStatus.OK,
+    success: true,
+    message: 'Order created successfully',
+    data: null
+  }
+  if (result) {
+    sendResponse(res, responseData)
+  }
+})
+
+const getSingleOrder = catchAsync(async (req: Request, res: Response) => {
+  const id: string = req?.params?.id
+
+  const result = await UserServices.getSingleUser(id)
+  const responseData = {
+    status: httpStatus.OK,
+    success: true,
+    message: 'Successfully get single User',
+    data: result
+  }
+  sendResponse<IUser>(res, responseData)
+})
+
 export const UserController = {
   createUser,
   updateUser,
   getUsers,
   getSingleUser,
   deleteUser,
-  createOrder
+  createOrder,
+  getSingleOrder
 }
