@@ -19,6 +19,11 @@ userRouter.patch(
   validateRequestMiddleWare(UserValidation.updateUserZodSchema),
   UserController.updateUser
 )
+userRouter.patch(
+  '/:id/orders',
+  validateRequestMiddleWare(UserValidation.updateUserZodSchema),
+  UserController.updateUser
+)
 
 userRouter.delete('/:id', UserController.deleteUser)
 

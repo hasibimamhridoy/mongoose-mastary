@@ -41,6 +41,18 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, responseData)
 })
 
+const createOrder = catchAsync(async (req: Request, res: Response) => {
+  const payload: IUser = req.body
+  const result = await UserServices.createUser(payload)
+  const responseData = {
+    status: httpStatus.OK,
+    success: true,
+    message: 'User created successfully',
+    data: result
+  }
+  sendResponse(res, responseData)
+})
+
 const updateUser = catchAsync(async (req: Request, res: Response) => {
   const id: string = req?.params?.id
   const data: IUser = req?.body
@@ -75,5 +87,6 @@ export const UserController = {
   updateUser,
   getUsers,
   getSingleUser,
-  deleteUser
+  deleteUser,
+  createOrder
 }
