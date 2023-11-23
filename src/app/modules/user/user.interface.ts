@@ -6,6 +6,11 @@ export type IOrder = {
   quantity: number
 }
 
+export type ITotalPrice = {
+  totalPrice : number
+}
+
+
 export type IUser = {
   userId: number
   username: string

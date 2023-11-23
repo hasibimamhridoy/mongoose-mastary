@@ -10,8 +10,8 @@ const OrderSchema: Schema<IOrder> = new Schema({
 
 const UserSchema: Schema<IUser, IUserModel> = new Schema<IUser, IUserModel>(
   {
-    userId: { type: Number, required: true },
-    username: { type: String, required: true, unique: true },
+    userId: { type: Number, required: true  },
+    username: { type: String, required: true},
     password: { type: String, required: true, select: 0 },
     fullName: {
       firstName: { type: String, required: true },
@@ -29,7 +29,6 @@ const UserSchema: Schema<IUser, IUserModel> = new Schema<IUser, IUserModel>(
     orders: [OrderSchema]
   },
   {
-    timestamps: true,
     versionKey: false
   }
 )
@@ -40,7 +39,7 @@ UserSchema.statics.hashGenerator = async password => {
 
 
 UserSchema.static('myCustomUserFind',async function myCustomUserFind(id:string) {
-  return await User.findById({_id:id});
+  return await User.findOne({userId:id});
 });
 
 UserSchema.pre('save', async function (next) {
