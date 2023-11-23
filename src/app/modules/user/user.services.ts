@@ -22,6 +22,13 @@ const getUsers = async () => {
 }
 
 const createUser = async (payload: IUser): Promise<Partial<IUser>> => {
+  
+  const isExist = await User.findOne({userName : payload.email})
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User Already Exists in this email address') 
+  }
+  
+  
   const result = await User.create(payload)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { orders ,password, ...restData } = result.toObject()
