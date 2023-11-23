@@ -24,7 +24,7 @@ const getUsers = async () => {
 const createUser = async (payload: IUser): Promise<Partial<IUser>> => {
   const result = await User.create(payload)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { password, ...restData } = result.toObject()
+  const { orders ,password, ...restData } = result.toObject()
   return restData
 }
 
