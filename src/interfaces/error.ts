@@ -1,4 +1,5 @@
 export type iErrorMessages = {
-  path: string | number
+  path?: string | number
+  code? : number
   message: string
 }

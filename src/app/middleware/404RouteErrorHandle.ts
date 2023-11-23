@@ -4,12 +4,11 @@ export const routeErrorHandle = (req: Request, res: Response) => {
   res.status(httpStatus.NOT_FOUND).json({
     success: false,
     message: 'Not Found',
-    errorMessages: [
+    error: [
       {
         path: req.originalUrl,
-        message: 'API Not Found'
+        description: 'API Not Found'
       }
-    ],
-    stack: ''
+    ]
   })
 }

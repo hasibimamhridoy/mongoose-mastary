@@ -1,7 +1,10 @@
 import { iErrorMessages } from './error'
 
 export type IGenericErrorResponse = {
-  status: number
+  success: boolean
   message: string
-  errorMessages: iErrorMessages[]
+  error : {
+    code : number
+    description: iErrorMessages
+  }
 }

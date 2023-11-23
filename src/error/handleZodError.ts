@@ -11,8 +11,11 @@ export const handleZodError = (error: ZodError): IGenericErrorResponse => {
   })
 
   return {
-    status: 400,
+    success: false,
     message: 'Validation Error from zod',
-    errorMessages
+    error : {
+      code : 400,
+      description : errorMessages
+    }
   }
 }

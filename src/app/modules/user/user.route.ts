@@ -16,18 +16,20 @@ userRouter.post(
   UserController.createUser
 )
 
+
 userRouter.put(
   '/:id',
   validateRequestMiddleWare(UserValidation.updateUserZodSchema),
   UserController.updateUser
 )
-userRouter.put(
-  '/:id/orders',
-  validateRequestMiddleWare(UserValidation.updateUserZodSchema),
-  UserController.createOrder
-)
 
 userRouter.delete('/:id', UserController.deleteUser)
+
+userRouter.put(
+  '/:id/orders',
+  validateRequestMiddleWare(UserValidation.createOrderZodSchemaForCreateOnly),
+  UserController.createOrder
+)
 
 export const UserRoutes = {
   userRouter

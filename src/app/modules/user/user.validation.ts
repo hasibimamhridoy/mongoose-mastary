@@ -17,6 +17,17 @@ const createOrderZodSchema: AnyZodObject = z.object({
   quantity: z.number({ required_error: 'Quantity is required' })
 })
 
+
+const createOrderZodSchemaForCreateOnly: AnyZodObject = z.object({
+  body: z.object({
+    productName: z.string({ required_error: 'Product name is required' }),
+  price: z.number({ required_error: 'Price is required' }),
+  quantity: z.number({ required_error: 'Quantity is required' })
+  })
+})
+
+
+
 const createUserZodSchema: AnyZodObject = z.object({
   body: z.object({
     userId: z.number({ required_error: 'User ID is required' }),
@@ -47,5 +58,6 @@ const updateUserZodSchema: AnyZodObject = z.object({
 
 export const UserValidation = {
   createUserZodSchema,
-  updateUserZodSchema
+  updateUserZodSchema,
+  createOrderZodSchemaForCreateOnly
 }

@@ -14,8 +14,8 @@ const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
 
   let status = 500
   let message = 'Something went wrong.'
-  let errorMessages: iErrorMessages[] = []
-  const stack = error.stack
+  let errorMessages: iErrorMessages
+
 
   if (error instanceof mongoose.Error.CastError) {
     const simplified = handleCastError(error)
@@ -27,31 +27,30 @@ const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
   
   else if (error instanceof mongoose.Error.ValidationError) {
     const simplified = handleValidationError(error)
-    status = simplified.status
+    status = simplified.error.code
     message = simplified.message
-    errorMessages = simplified.errorMessages
+    error = simplified.message
   } 
   
   
   else if (error instanceof ZodError) {
     const simplified = handleZodError(error)
-    status = simplified.status
+
+    console.log(simplified);
+    status = simplified.error.code
     message = simplified.message
-    errorMessages = simplified.errorMessages
+    errorMessages = simplified.error.description
   } 
   
   
   else if (error instanceof ApiError) {
     status = error.status
     message = error.message
-    errorMessages = error?.message
-      ? [
-          {
-            path: '',
-            message: error?.message
-          }
-        ]
-      : []
+    errorMessages = {
+      code : error.status,
+      message: error?.message
+    }
+    
   } 
   
   
@@ -67,11 +66,14 @@ const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
       : []
   }
 
+
   res.status(status).json({
     success: false,
     message,
-    errorMessages,
-    stack
+    error : {
+      code : status,
+      description : errorMessages
+    }
   })
 }
 
