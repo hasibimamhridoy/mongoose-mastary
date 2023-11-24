@@ -10,7 +10,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cookieParser())
-app.use('/api/v1/users', UserRoutes.userRouter)
+app.use('/api/users', UserRoutes.userRouter)
 
 
 //global
